@@ -1,0 +1,5 @@
+.env
+_*/
+src/
+.log
+slurm_files/

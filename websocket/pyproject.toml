@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "ws-server"
+version = "0.1.0"
+description = "web socket server"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+websockets = "^13.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
