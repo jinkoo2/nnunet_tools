@@ -10,8 +10,8 @@ data_dir = '/gpfs/projects/KimGroup/data/mic-mkfz'
 raw_dir = os.path.join(data_dir, 'raw')
 results_dir = os.path.join(data_dir, 'results')
 
-dataset_name = 'Dataset009_Spleen'
-dataset_num = 9 #
+#dataset_name = 'Dataset009_Spleen'
+#dataset_num = 9 #
 
 #dataset_name = 'Dataset101_Eye[ul]L'
 #dataset_num = 101
@@ -19,15 +19,18 @@ dataset_num = 9 #
 #dataset_name = 'Dataset102_ProneLumpStessin'
 #dataset_num = 102
 
-#dataset_name = 'Dataset103_CBCT[sp]Bladders[sp]For[sp]ART'
-#dataset_num = 103
+dataset_name = 'Dataset103_CBCT[sp]Bladders[sp]For[sp]ART'
+dataset_num = 103
 
 dataset_results_dir = os.path.join(results_dir, dataset_name)
 
 disable_ensembling = True
 
-cmd_lines = f'nnUNetv2_find_best_configuration {dataset_num} -c 2d 3d_fullres 3d_lowres '
+configurations = '2d 3d_fullres 3d_lowres' 
+configurations = '3d_lowres'
+configurations = '3d_fullres'
 
+cmd_lines = f'nnUNetv2_find_best_configuration {dataset_num} -c {configurations} '
 if disable_ensembling:
     cmd_lines = f'{cmd_lines} --disable_ensembling'
 
@@ -37,7 +40,8 @@ with open(script_templete_file, 'r') as file:
 
 txt = txt.replace('{cmd_lines}', cmd_lines)
 
-script_file = os.path.join(dataset_results_dir, 'find_best_conf.sh')
+configurations_encoded = configurations.replace('_','[us]')
+script_file = os.path.join(dataset_results_dir, f'find_best_conf_{configurations_encoded}.sh')
 with open(script_file, 'w') as file:
     file.write(txt)
 

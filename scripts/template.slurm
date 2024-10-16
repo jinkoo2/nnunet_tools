@@ -3,7 +3,7 @@
 #SBATCH --output={log_file}
 #SBATCH --ntasks-per-node=28
 #SBATCH --nodes=1
-#SBATCH --time=03:00:00
+#SBATCH --time=08:00:00
 #SBATCH -p a100-large
 #SBATCH --gres=gpu:4            # number of GPUs per node (gres=gpu:N)
 #SBATCH --gpus=4 # number of GPUs per node (gres=gpu:N), this is a backup of --gres

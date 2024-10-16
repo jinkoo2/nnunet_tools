@@ -19,6 +19,9 @@ results_dir = os.path.join(data_dir, 'results')
 #dataset_name = 'Dataset102_ProneLumpStessin'
 #dataset_num = 102
 
+round = 'r2'
+conf = '2d'
+conf_encoded = conf.replace('_', '[us]')
 dataset_name = 'Dataset103_CBCT[sp]Bladders[sp]For[sp]ART'
 dataset_num = 103
 
@@ -37,15 +40,11 @@ def make_predict_shell_script(input_file_path, output_file_path):
 
 make_predict_shell_script(inference_instruction_file, script_tmpl_file)
 
-imagesTs_dir = os.path.join(os.path.join(raw_dir, dataset_name), 'imagesTs')
-labelsTs_model1 = os.path.join(os.path.join(raw_dir, dataset_name), '1.labels_model1')
-labelsTs_model2 = os.path.join(os.path.join(raw_dir, dataset_name), '2.labels_model2')
-labelsTs_predict = os.path.join(os.path.join(raw_dir, dataset_name), '3.labels_predict')
-labelsTs_predict_pp = os.path.join(os.path.join(raw_dir, dataset_name), '4.labels_predict_pp')
+imagesTs_dir = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_imagesTs')
+labelsTs_predict = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_predict')
+labelsTs_predict_pp = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_predict_pp')
 
 INPUT_FOLDER = imagesTs_dir
-OUTPUT_FOLDER_MODEL1 = labelsTs_model1
-OUTPUT_FOLDER_MODEL2 = labelsTs_model2
 OUTPUT_FOLDER = labelsTs_predict
 OUTPUT_FOLDER_PP = labelsTs_predict_pp
 
@@ -53,8 +52,6 @@ with open(script_tmpl_file, 'r') as f:
      cmd_lines = f.read()
 
 cmd_lines = cmd_lines.replace('INPUT_FOLDER', INPUT_FOLDER)
-cmd_lines = cmd_lines.replace('OUTPUT_FOLDER_MODEL_1', OUTPUT_FOLDER_MODEL1)
-cmd_lines = cmd_lines.replace('OUTPUT_FOLDER_MODEL_2', OUTPUT_FOLDER_MODEL2)
 cmd_lines = cmd_lines.replace('OUTPUT_FOLDER_PP', OUTPUT_FOLDER_PP)
 cmd_lines = cmd_lines.replace('OUTPUT_FOLDER', OUTPUT_FOLDER)
 
@@ -73,10 +70,10 @@ def schedule_predict(dataset_num, cmd_lines):
         os.makedirs(slurm_case_dir)
 
     # job_name, train_param
-    job_name = f'predict_{dataset_num}'
+    job_name = f'predict_{dataset_num}_{round}'
 
     # save slurm file
-    slurm_file = os.path.join(slurm_case_dir, f'predict.slurm')
+    slurm_file = os.path.join(slurm_case_dir, f'predict_{round}.slurm')
 
     #log file
     log_file = slurm_file + '.log'
