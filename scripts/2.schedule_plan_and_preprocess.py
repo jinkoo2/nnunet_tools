@@ -58,7 +58,9 @@ def schedule_plan_and_preprocess(dataset_num, planner, verify_dataset_integrity)
 #dataset_num = 9 # Dataset009_Spleen
 #dataset_num = 101 # Dataset101_Eye[ul]L
 #dataset_num = 102 # Dataset102_ProneLumpStessin
-dataset_num = 103
+#dataset_num = 103
+#dataset_num = 104
+dataset_num = 105
 
 verify_dataset_integrity = True
 planner='ExperimentPlanner'

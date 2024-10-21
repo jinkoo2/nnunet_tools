@@ -9,6 +9,8 @@ from utils import _error, _info, _join_dir
 
 def get_config():
    
+    home_dir = os.getenv('scripts_dir')
+    venv_dir = os.getenv('venv_dir')
     scripts_dir = os.getenv('scripts_dir')
     nnunet_dir = os.getenv('nnunet_dir')
     data_dir = os.getenv('data_dir')
@@ -27,15 +29,19 @@ def get_config():
     results_dir = _join_dir(data_dir, 'results')
 
     slurm_files_dir = _join_dir(data_dir, 'slurm_files')
+    sh_files_dir = _join_dir(data_dir, 'sh_files')
 
     ret = {
+        'home_dir': home_dir,
+        'venv_dir': venv_dir,
         'scripts_dir': scripts_dir,
         'nnunet_dir': nnunet_dir,
         'data_dir': data_dir,
         'raw_dir': raw_dir,
         'preprocessed_dir': preprocessed_dir,
         'results_dir': results_dir,
-        'slurm_files_dir': slurm_files_dir
+        'slurm_files_dir': slurm_files_dir,
+        'sh_files_dir': sh_files_dir
     }
 
     print('get_config().return=', ret)

@@ -1,10 +1,11 @@
 
 import os
-from utils import _error, _info, _join_dir, _must_exist
+from utils import _error, _info, _join_dir, _must_exist, get_current_datetime_str, copy_file_to_folder
+import utils
 from config import get_config
 
 
-def predict_and_postprocess(
+def postprocess(
         dataset_name = 'Dataset103_CBCT[sp]Bladders[sp]For[sp]ART', 
         dataset_num = 103,
         round = 'r2',
@@ -12,8 +13,7 @@ def predict_and_postprocess(
         folds = '0 1 2 3 4',
         plan = 'nnUNetPlans',
         trainer = 'nnUNetTrainer',
-        use_slurm = True,
-        device = 'cuda'
+        use_slurm = False,
         )->None:
 
     config = get_config()
@@ -26,47 +26,37 @@ def predict_and_postprocess(
     preprocessed_dir= config['preprocessed_dir']
     results_dir = config['results_dir']
 
-    slurm_files_dir = config['slurm_files_dir']
+    
 
     conf_encoded = conf.replace('_', '[us]')
 
     dataset_results_dir = _join_dir(results_dir, dataset_name)
 
-    imagesTs_dir = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_imagesTs')
+    #imagesTs_dir = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_imagesTs')
     labelsTs_predict = os.path.join(os.path.join(raw_dir, dataset_name), f'{round}_{conf_encoded}_predict')
     labelsTs_predict_pp = os.path.join(labelsTs_predict, 'pp')
 
-    # predition
-    pred_i = imagesTs_dir
-    pred_o = labelsTs_predict
-    pred_f = folds 
-    pred_tr = trainer
-    pred_c = conf
-    pred_p = plan
-    pred_d = device 
-    pred_cmd = f'nnUNetv2_predict -d {dataset_name} -i {pred_i} -o {pred_o} -f  {pred_f} -tr {pred_tr}  -c {pred_c} -p {pred_p} -device {pred_d}\n'
-    _info(pred_cmd)
-
-    _must_exist(pred_i)
-
     # post processing
-    pp_i =  pred_o  
+    pp_i =  labelsTs_predict  
     pp_o = labelsTs_predict_pp
-    folds_str = pred_f.replace(' ', '_')
-    cross_val_results_dir = f'{dataset_results_dir}/{pred_tr}__{pred_p}__{pred_c}/crossval_results_folds_{folds_str}'
+    folds_str = folds.replace(' ', '_')
+    cross_val_results_dir = f'{dataset_results_dir}/{trainer}__{plan}__{conf}/crossval_results_folds_{folds_str}'
     pp_pkl_file=f'{cross_val_results_dir}/postprocessing.pkl'
     pp_np=8
     pp_plans_json=f'{cross_val_results_dir}/plans.json'
     pp_cmd = f'nnUNetv2_apply_postprocessing -i {pp_i} -o {pp_o} -pp_pkl_file {pp_pkl_file} -np {pp_np} -plans_json {pp_plans_json}\n'
     _info(pp_cmd)
 
+    _must_exist(pp_i)
     _must_exist(cross_val_results_dir)
     _must_exist(pp_pkl_file)
     _must_exist(pp_plans_json)
 
-    cmd_lines = f'{pred_cmd}\n {pp_cmd}\n'
+    cmd_lines = f'{pp_cmd}\n'
 
     if use_slurm:
+
+        slurm_files_dir = config['slurm_files_dir']
 
         tmplt_file = os.path.join(scripts_dir, 'template.slurm')
 
@@ -84,8 +74,9 @@ def predict_and_postprocess(
         # job_name, train_param
         job_name = f'predict_{dataset_num}_{round}_{conf_encoded}'
 
-        # save slurm file
-        slurm_file = os.path.join(slurm_case_dir, f'predict_{round}_{conf_encoded}.slurm')
+        # slurm file
+        slurm_file = utils.get_unique_file_path(f'predict_{round}_{conf_encoded}.slurm', slurm_case_dir )
+        _info(f'creating: {slurm_file}')
 
         #log file
         log_file = slurm_file + '.log'
@@ -107,10 +98,21 @@ def predict_and_postprocess(
         
         cmd = f'module load slurm && sbatch {slurm_file}'
         print(f'running "{cmd}"')
-        subprocess.run(cmd, shell=True)
+        result = subprocess.run(cmd, shell=True)
+
+        # Optionally check the result of the command
+        if result.returncode == 0:
+            print("Command executed successfully.")
+        else:
+            print(f"Command failed with return code {result.returncode}.")
 
     else: # run as a shell script
-        script_file = os.path.join(dataset_results_dir, 'predict.sh')
+
+        sh_files_dir = config['sh_files_dir']
+
+        script_file = utils.get_unique_file_path(f'predict_{round}_{conf_encoded}.sh', sh_files_dir )
+        _info(f'creating: {script_file}')
+
         with open(script_file, 'w') as file:
             
             #switch to the base
@@ -126,9 +128,18 @@ def predict_and_postprocess(
         # sbatch
         import subprocess
 
+        # Define the command
         cmd = f'chmod +x {script_file} && {script_file}'
-        print(f'running "{cmd}"')
-        subprocess.run(cmd, shell=True)
+        
+        # Run the command and capture stdout and stderr
+        result = subprocess.run(cmd, shell=True)
+
+        # Optionally check the result of the command
+        if result.returncode == 0:
+            print("Command executed successfully.")
+        else:
+            print(f"Command failed with return code {result.returncode}.")
+
 
 if __name__ == '__main__':
 
@@ -138,8 +149,7 @@ if __name__ == '__main__':
     folds = '0 1 2 3 4'
     plan = 'nnUNetPlans'
     trainer = 'nnUNetTrainer'
-    use_slurm = True
-    device = 'cuda'
+    use_slurm = False
     
     #dataset_name = 'Dataset009_Spleen'
     #dataset_num = 9
@@ -149,8 +159,9 @@ if __name__ == '__main__':
 
     #dataset_name = 'Dataset102_ProneLumpStessin'
     #dataset_num = 102
+    #for conf in ['3d_lowres']:
     for conf in ['3d_fullres']:
-        predict_and_postprocess(
+        postprocess(
             dataset_name=dataset_name,
             dataset_num=dataset_num,
             round = round,
@@ -158,8 +169,7 @@ if __name__ == '__main__':
             folds=folds,
             plan=plan,
             trainer=trainer,
-            use_slurm=use_slurm,
-            device=device
+            use_slurm=use_slurm
             )
     print('done')
 

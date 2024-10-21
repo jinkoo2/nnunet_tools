@@ -100,9 +100,11 @@ def schedule_validation(dataset_num, configuration, fold, gen_predicted_probabil
 
 
 #dataset_num = 9
-dataset_num = 101
+#dataset_num = 101
 #dataset_num = 102
 #dataset_num = 103
+#dataset_num = 104
+dataset_num = 105
 
 gen_predicted_probabilities = True # add --npz
 #configuration='2d'
@@ -125,7 +127,7 @@ if validation_only:
 else:
 
     #for configuration in ['2d', '3d_fullres', '3d_lowres']:
-    for configuration in ['3d_fullres']:
+    for configuration in ['3d_lowres']:
         for run in range(num_runs):
             for fold in range(5):
                 print(f'=== fold: {fold} ===')
