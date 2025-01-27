@@ -174,13 +174,7 @@ if __name__ == '__main__':
     use_slurm = True
     device = 'cuda'
 
-    import slurm_helper
-    slurm_job = slurm_helper.get_my_first_running_job('jinkokim')
-    if slurm_job != None:
-        run_after_slurm_job_id = slurm_job['JobId']
-    else:
-        run_after_slurm_job_id = None
-    
+       
     #dataset_name = 'Dataset009_Spleen'
     #dataset_num = 9
 
@@ -200,8 +194,7 @@ if __name__ == '__main__':
             plan=plan,
             trainer=trainer,
             use_slurm=use_slurm,
-            device=device,
-            run_after_slurm_job_id=run_after_slurm_job_id
+            device=device
             )
     print('done')
 

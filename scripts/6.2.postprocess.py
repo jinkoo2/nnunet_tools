@@ -109,8 +109,9 @@ def postprocess(
     else: # run as a shell script
 
         sh_files_dir = config['sh_files_dir']
+        case_sh_files_dir = _join_dir(sh_files_dir, f'{dataset_num}')
 
-        script_file = utils.get_unique_file_path(f'predict_{round}_{conf_encoded}.sh', sh_files_dir )
+        script_file = utils.get_unique_file_path(f'predict_{round}_{conf_encoded}.sh', case_sh_files_dir )
         _info(f'creating: {script_file}')
 
         with open(script_file, 'w') as file:
@@ -132,6 +133,7 @@ def postprocess(
         cmd = f'chmod +x {script_file} && {script_file}'
         
         # Run the command and capture stdout and stderr
+        _info(f'running script...')
         result = subprocess.run(cmd, shell=True)
 
         # Optionally check the result of the command
@@ -140,11 +142,10 @@ def postprocess(
         else:
             print(f"Command failed with return code {result.returncode}.")
 
-
 if __name__ == '__main__':
 
-    dataset_name = 'Dataset103_CBCT[sp]Bladders[sp]For[sp]ART' 
-    dataset_num = 103
+    dataset_name = 'Dataset104_CBCTRectumBowel' 
+    dataset_num = 104
     round = 'r2'
     folds = '0 1 2 3 4'
     plan = 'nnUNetPlans'
@@ -159,8 +160,7 @@ if __name__ == '__main__':
 
     #dataset_name = 'Dataset102_ProneLumpStessin'
     #dataset_num = 102
-    #for conf in ['3d_lowres']:
-    for conf in ['3d_fullres']:
+    for conf in ['3d_lowres']:
         postprocess(
             dataset_name=dataset_name,
             dataset_num=dataset_num,

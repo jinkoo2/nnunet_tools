@@ -1,4 +1,4 @@
-echo "loadign pytorch module"
+echo "loading pytorch module"
 module load pytorch-gpu/2.0.1 
 python --version
 pip --version 

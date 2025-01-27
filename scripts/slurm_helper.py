@@ -52,9 +52,11 @@ def suspend_job(job_id):
     return result
 
 def resume_job(job_id):
-    # Run the `scontrol show job <job_id>` command
     result = _run(f"scontrol resume {job_id}")
+    return result
 
+def cancel_job(job_id):
+    result = _run(f"scancel {job_id}")
     return result
 
 def save_job_info_to_json(job_id, filename):
@@ -80,9 +82,15 @@ def get_my_first_running_job(userid):
             return job
     return None
 
+def cancel_my_all_jobs(userid):
+    job_ids = get_my_job_ids(userid)
+    for job_id in job_ids:
+        print(f'caceling job: {job_id}')
+        cancel_job(job_id)
+
 if __name__ == '__main__':
     userid = 'jinkokim'
    
     print_my_job_state(userid)
-
+    
     print('done')

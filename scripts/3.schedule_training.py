@@ -126,9 +126,13 @@ if validation_only:
             time.sleep(3)
 else:
 
+    skip_runs = [0]
+    
     #for configuration in ['2d', '3d_fullres', '3d_lowres']:
     for configuration in ['3d_lowres']:
         for run in range(num_runs):
+            if run in skip_runs:
+                continue
             for fold in range(5):
                 print(f'=== fold: {fold} ===')
                 schedule_train(dataset_num, configuration, fold, run, gen_predicted_probabilities)
