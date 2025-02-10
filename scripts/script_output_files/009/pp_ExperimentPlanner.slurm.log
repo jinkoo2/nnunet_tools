@@ -1,0 +1,5 @@
+Fingerprint extraction...
+Dataset009_Spleen
+Using <class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'> as reader/writer
+slurmstepd: error: *** JOB 915051 ON a100-05 CANCELLED AT 2025-01-30T20:31:49 DUE TO TIME LIMIT ***
+slurmstepd: error: Detected 2 oom-kill event(s) in StepId=915051.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.

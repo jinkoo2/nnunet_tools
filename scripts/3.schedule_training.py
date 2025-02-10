@@ -126,7 +126,7 @@ if validation_only:
             time.sleep(3)
 else:
 
-    skip_runs = [0]
+    skip_runs = []
     
     #for configuration in ['2d', '3d_fullres', '3d_lowres']:
     for configuration in ['3d_lowres']:

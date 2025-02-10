@@ -1,12 +1,15 @@
 from fastapi import FastAPI
-from long_task_routes import router as long_tasks_router
-from nnunet_dataset_routes import router as ds_router
+from nnunet_dataset_routes import router as dataset_router
 
 app = FastAPI()
 
-app.include_router(long_tasks_router)
-app.include_router(ds_router)
+app.include_router(dataset_router)
+
+
+@app.get("/ping")
+async def ping():
+    return {"msg": "Pong"}
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the FastAPI Celery example!"}
+    return {"msg": "Welcome to the FastAPI Celery example 2!"}

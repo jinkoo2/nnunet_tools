@@ -4,8 +4,8 @@ python --version
 pip --version 
 
 echo "creating a viritual environment, and activate it"
-python -m venv /gpfs/scratch/jinkokim/venv_list/nnunet
-source /gpfs/scratch/jinkokim/venv_list/nnunet/bin/activate
+python -m venv _venv4
+source ./_venv4/bin/activate
 
 echo "download source code from github, and install the dependent packages"
 module load git
