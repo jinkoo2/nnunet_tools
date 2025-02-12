@@ -5,8 +5,12 @@ import random
 import os
 import re
 
+from logger import logger, log_exception as LE, log_and_raise_exception as LER
 
-nnunet_data_dir = '/gpfs/projects/KimGroup/data/mic-mkfz'
+from config import get_config
+nnunet_data_dir = get_config()["data_dir"] 
+print(f'nnunet_data_dir={nnunet_data_dir}')
+
 nnunet_raw_dir =  os.path.join(nnunet_data_dir,'raw')
 nnunet_preprocessed_dir =  os.path.join(nnunet_data_dir,'preprocessed')
 nnunet_results_dir =  os.path.join(nnunet_data_dir,'results')
@@ -22,40 +26,46 @@ def get_dataset_dirs(folder_path):
     pattern = r"^Dataset\d{3}_.+$"  # Regex for Datasetxxx_yyyyyy format
     return [entry.name for entry in Path(folder_path).iterdir() if entry.is_dir() and re.match(pattern, entry.name)]
 
+import asyncio
+import aiofiles
+
+async def read_dataset_json(dirname):
+    """Read dataset.json file asynchronously."""
+    json_file = os.path.join(nnunet_raw_dir, dirname, 'dataset.json')
+    try:
+        async with aiofiles.open(json_file, 'r') as f:
+            data = await f.read()
+            data_dict = json.loads(data)
+            data_dict['id'] = dirname
+            return data_dict
+    except Exception as e:
+        LE(f'Failed reading file {json_file}. Exception: {e}')
+        return None
+
 @router.get("/dataset/list")
 async def get_dataset_list():
-    
-    """Check the status of a task."""
+    """Retrieve dataset list asynchronously."""
     dirnames = get_dataset_dirs(nnunet_raw_dir)
+    tasks = [read_dataset_json(dirname) for dirname in dirnames]
+    dataset_list = await asyncio.gather(*tasks)
+    
+    # Remove None values (failed reads)
+    dataset_list = [ds for ds in dataset_list if ds]
 
-    list = []    
-    # read dataset.json files
-    for dirname in dirnames:
-        dir = os.path.join(nnunet_raw_dir, dirname)
-        json_file = os.path.join(dir, 'dataset.json')
-        try:
-            with open(json_file, 'r') as f:
-                import json
-                data = json.load(f)
-                data['id'] = dirname
-                list.append(data)
-        except Exception as e:
-            print(f'Failed reading file {json_file}. Exception: {e}')
+    dataset_list = sorted(dataset_list, key=lambda x: x["id"])
 
-    list = sorted(list, key=lambda x: x["id"])
+    logger.info(f'dataset_list={dataset_list}')
 
-    print(list)
-
-    return list
+    return dataset_list
 
 @router.get("/dataset/id-list")
 async def get_dataset_id_list():
-    
     """Get dataset is list"""
     ids = get_dataset_dirs(nnunet_raw_dir)
 
-    return ids
+    logger.info(f'ids={ids}')
 
+    return ids
 
 class DatasetRequest(BaseModel):
     """Pydantic model for dataset validation."""
@@ -72,73 +82,72 @@ async def post_dataset(request: Request):
     """Create a new dataset with validation."""
     try:
         data = await request.json()  # Extract JSON body
-        print(f"Received dataset: {json.dumps(data, indent=4)}")
+        logger.info(f"Received dataset: {json.dumps(data, indent=4)}")
 
         # **Validation 1: Required fields**
         required_fields = ["name", "description", "reference", "licence", "tensorImageSize", "labels", "channel_names","file_ending"]
         for field in required_fields:
             if field not in data:
-                raise HTTPException(status_code=400, detail=f"Missing required field: {field}")
+                LER(HTTPException(status_code=400, detail=f"Missing required field: {field}"))
 
         # **Validation 2: Check if "name" is alphanumeric without spaces**
         if not data["name"].isalnum():
-            raise HTTPException(status_code=400, detail="Error: 'name' must be alphanumeric and contain no spaces.")
+            LER(HTTPException(status_code=400, detail="Error: 'name' must be alphanumeric and contain no spaces."))
 
         # **Validation 3: Check if "tensorImageSize" is either "2D" or "3D"**
         if data["tensorImageSize"] not in ["2D", "3D"]:
-            raise HTTPException(status_code=400, detail="Error: 'tensorImageSize' must be either '2D' or '3D'.")
+            LER(HTTPException(status_code=400, detail="Error: 'tensorImageSize' must be either '2D' or '3D'."))
 
         # **Validation 4: Ensure "labels" contains "background" with value 0**
         if "background" not in data["labels"] or data["labels"]["background"] != 0:
-            raise HTTPException(status_code=400, detail="Error: 'labels' must include 'background' with value 0.")
+            LER(HTTPException(status_code=400, detail="Error: 'labels' must include 'background' with value 0."))
 
         # **Set default values if not present**
         data.setdefault("numTraining", 0)
         data.setdefault("numTest", 0)
 
         # **Find all used dataset numbers**
-        # **Find all used dataset numbers and names**
         existing_datasets = get_dataset_dirs(nnunet_raw_dir)
         used_numbers = set()
-        existing_names = set()
-
         for dataset in existing_datasets:
             match = re.match(r"Dataset(\d{3})_(.+)$", dataset)
             if match:
                 used_numbers.add(int(match.group(1)))
-                existing_names.add(match.group(2))
-
-        print(f"🔢 Used dataset numbers: {used_numbers}")
-        print(f"📂 Existing dataset names: {existing_names}")
-
+        logger.info(f"Used dataset numbers: {used_numbers}")
+        
         # **Check if the dataset name is already in use**
-        if data["name"] in existing_names:
-            raise HTTPException(status_code=400, detail=f"Error: Dataset name '{data['name']}' already exists.")
+        existing_datasets_lowercase = {name.lower() for name in existing_datasets}
+        logger.info(f"Existing datasets (lower case): {existing_datasets_lowercase}")
+        if data["name"].lower() in existing_datasets_lowercase:
+            LER(HTTPException(status_code=400, detail=f"Error: Dataset name '{data['name']}' already exists."))
     
         # **Generate a random unused dataset number**
         available_numbers = set(range(1, 1000)) - used_numbers  # Numbers 1-999 not in use
         if not available_numbers:
-            raise HTTPException(status_code=500, detail="Error: No available dataset numbers left.")
+            LER(HTTPException(status_code=500, detail="Error: No available dataset numbers left."))
 
         new_dataset_num = random.choice(list(available_numbers))
 
-        print(f'new_dataset_num={new_dataset_num}')
+        logger.info(f'new_dataset_num={new_dataset_num}')
 
         # **Generate new dataset ID**
         dataset_id = f"Dataset{new_dataset_num:03d}_{data['name']}"
         dataset_path = os.path.join(nnunet_raw_dir, dataset_id)
 
-        print(f'dataset_path={dataset_path}')
+        logger.info(f'dataset_path={dataset_path}')
 
         # **Create new dataset directory and save dataset.json**
         os.makedirs(dataset_path, exist_ok=True)
         json_path = os.path.join(dataset_path, "dataset.json")
-        print(f'json_path={json_path}')
+        logger.info(f'json_path={json_path}')
+        logger.info(f'data={data}')
 
         with open(json_path, "w") as f:
             json.dump(data, f, indent=4)
 
         data["id"] = dataset_id
+
+        logger.info(f"Dataset created successfully: {dataset_id}")
 
         return {
             "message": "Dataset successfully created!",
@@ -146,33 +155,13 @@ async def post_dataset(request: Request):
         }
 
     except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid JSON format. Please send valid JSON.")
+        LER(HTTPException(status_code=400, detail="Invalid JSON format. Please send valid JSON."))
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        LER(HTTPException(status_code=500, detail=f"An error occurred: {str(e)}"))
     
 
 
-class PlanAndPreprocessTaskRequest(BaseModel):
-    dataset_num: int
-    planner: str
-    verify_dataset_integrity: bool
 
-@router.post("/plan-and-preprocess/")
-async def plan_and_preprocess(request: PlanAndPreprocessTaskRequest):
-    """Submit a task for processing."""
-    # Extract the `data` field from the TaskRequest object
-    
-    dataset_num = request.dataset_num
-    planner = request.planner
-    verify_dataset_integrity = request.verify_dataset_integrity
-
-    print(f"dataset_num={dataset_num}")
-    print(f"planner={planner}")
-    print(f"verify_dataset_integrity={verify_dataset_integrity}")
-
-    from nnunet_plan_and_preprocess import plan_and_preprocess_slurm
-    print('RUNNING...plan_and_preprocess_slurm()')
-    plan_and_preprocess_slurm(dataset_num, planner, verify_dataset_integrity)
 
     

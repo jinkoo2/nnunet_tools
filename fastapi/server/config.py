@@ -14,6 +14,7 @@ def get_config():
     scripts_dir = os.getenv('scripts_dir')
     nnunet_dir = os.getenv('nnunet_dir')
     data_dir = os.getenv('data_dir')
+    log_dir = os.getenv('log_dir')
 
     if not os.path.exists(scripts_dir):
         _error(f'scripts_dir not found:{scripts_dir}')
@@ -44,7 +45,8 @@ def get_config():
         'results_dir': results_dir,
         'slurm_files_dir': slurm_files_dir,
         'sh_files_dir': sh_files_dir,
-        'script_output_files_dir': script_output_files_dir
+        'script_output_files_dir': script_output_files_dir,
+        'log_dir': log_dir
     }
 
     print('get_config().return=', ret)
