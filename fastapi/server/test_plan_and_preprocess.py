@@ -38,7 +38,7 @@ def check_plan_and_preprocess_task_status(task_id):
 if __name__ == "__main__":
     
     # Step 1: Submit a task
-    dataset_num = 9
+    dataset_num = 847
     planner ='ExperimentPlanner'
     verify_dataset_integrity = True
 

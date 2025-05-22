@@ -49,6 +49,6 @@ def get_config():
         'log_dir': log_dir
     }
 
-    print('get_config().return=', ret)
+    #print('get_config().return=', ret)
 
     return ret

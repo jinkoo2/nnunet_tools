@@ -15,35 +15,15 @@ nnunet_raw_dir =  os.path.join(nnunet_data_dir,'raw')
 nnunet_preprocessed_dir =  os.path.join(nnunet_data_dir,'preprocessed')
 nnunet_results_dir =  os.path.join(nnunet_data_dir,'results')
 
+from nnunet_raw import get_dataset_dirs, read_dataset_json
+
 # Define the router
 router = APIRouter()
 
-from pathlib import Path
-import re
-
-def get_dataset_dirs(folder_path):
-    """Get a list of data set."""
-    pattern = r"^Dataset\d{3}_.+$"  # Regex for Datasetxxx_yyyyyy format
-    return [entry.name for entry in Path(folder_path).iterdir() if entry.is_dir() and re.match(pattern, entry.name)]
-
 import asyncio
-import aiofiles
 
-async def read_dataset_json(dirname):
-    """Read dataset.json file asynchronously."""
-    json_file = os.path.join(nnunet_raw_dir, dirname, 'dataset.json')
-    try:
-        async with aiofiles.open(json_file, 'r') as f:
-            data = await f.read()
-            data_dict = json.loads(data)
-            data_dict['id'] = dirname
-            return data_dict
-    except Exception as e:
-        LE(f'Failed reading file {json_file}. Exception: {e}')
-        return None
-
-@router.get("/dataset/list")
-async def get_dataset_list():
+@router.get("/dataset_json/list")
+async def get_dataset_json_list():
     """Retrieve dataset list asynchronously."""
     dirnames = get_dataset_dirs(nnunet_raw_dir)
     tasks = [read_dataset_json(dirname) for dirname in dirnames]
@@ -58,8 +38,8 @@ async def get_dataset_list():
 
     return dataset_list
 
-@router.get("/dataset/id-list")
-async def get_dataset_id_list():
+@router.get("/dataset_json/id-list")
+async def get_dataset_json_id_list():
     """Get dataset is list"""
     ids = get_dataset_dirs(nnunet_raw_dir)
 
@@ -67,7 +47,7 @@ async def get_dataset_id_list():
 
     return ids
 
-class DatasetRequest(BaseModel):
+class DatasetJsonRequest(BaseModel):
     """Pydantic model for dataset validation."""
     name: str
     description: str
@@ -77,7 +57,7 @@ class DatasetRequest(BaseModel):
     labels: dict
     channel_names: dict
 
-@router.post("/dataset/new")
+@router.post("/dataset_json/new")
 async def post_dataset(request: Request):
     """Create a new dataset with validation."""
     try:
