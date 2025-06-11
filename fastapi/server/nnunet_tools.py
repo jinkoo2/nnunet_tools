@@ -6,7 +6,7 @@ def find_image_files(folder: str, file_ending):
 
     file_list = [f for f in os.listdir(folder) if f.endswith(file_ending)]
 
-    pattern = re.compile(f"^(.+)_(\d+)_(\d+)$")
+    pattern = re.compile(r"^(.+)_(\d+)_(\d+)$")
 
     result = []
     for fname in file_list:
@@ -19,7 +19,7 @@ def find_image_files(folder: str, file_ending):
                 "num": int(match.group(2)),
                 "num2": int(match.group(3)),
             })
-    return sorted(result, key=lambda x: x["num"])
+    return sorted(result, key=lambda x: (x["num"], x["num2"]))
 
 
 def find_label_files(folder: str, file_ending):
@@ -28,7 +28,7 @@ def find_label_files(folder: str, file_ending):
 
     file_list = [f for f in os.listdir(folder) if f.endswith(file_ending)]
 
-    pattern = re.compile(f"^(.+)_(\d+)$")
+    pattern = re.compile(r"^(.+)_(\d+)$")
 
     result = []
     for fname in file_list:
@@ -41,8 +41,10 @@ def find_label_files(folder: str, file_ending):
                     "prefix": match.group(1),
                     "num": int(match.group(2))
                 })
-        except:
+        except Exception as e:
+            print(f"Skipping {fname}: {e}")
             continue
+        
     return sorted(result, key=lambda x: x["num"])
 
 if __name__ == '__main__':

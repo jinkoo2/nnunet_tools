@@ -164,4 +164,4 @@ if __name__ == '__main__':
         filename =  item['filename']
         get_image_and_labels(dataset_id, images_for, num)
 
-    #post_image_and_labels()
+    post_image_and_labels()

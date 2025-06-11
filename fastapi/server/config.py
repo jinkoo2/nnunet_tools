@@ -3,7 +3,13 @@ import os
 #################
 # ENV load .env file
 from dotenv import load_dotenv
-load_dotenv()
+dotenv_path = os.getenv("DOTENV_PATH")
+if dotenv_path and os.path.exists(dotenv_path):
+    print(f'loading .env file:{dotenv_path}')
+    load_dotenv(dotenv_path=dotenv_path)
+else:
+    print(f'running load_dotenv()')
+    load_dotenv()
 
 from utils import _error, _info, _join_dir
 

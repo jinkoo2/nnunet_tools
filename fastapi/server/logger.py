@@ -46,9 +46,10 @@ def log_and_raise_exception(e):
 
 from fastapi import Request
 def log_request(request: Request):
-    client_ip = request.client.host if request.client else "Unknown IP"
-    user_agent = request.headers.get("User-Agent", "Unknown User-Agent")
-    logger.info(f"Received request from {client_ip}, User-Agent: {user_agent}")
+    if request:
+        client_ip = request.client.host if request.client else "Unknown IP"
+        user_agent = request.headers.get("User-Agent", "Unknown User-Agent")
+        logger.info(f"Received request from {client_ip}, User-Agent: {user_agent}")
 
 # Example usage:
 if __name__ == "__main__":

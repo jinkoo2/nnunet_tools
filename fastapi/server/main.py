@@ -4,11 +4,13 @@ from fastapi import FastAPI
 from nnunet_dataset_json_routes import router as dataset_router
 from nnunet_dataset_images_and_labels_routes import router as dataset_images_labels_router
 from nnunet_plan_and_preprocess_routes import router as plan_and_preprocess_router
+from nnunet_predictions_routes import router as predictions_router
 app = FastAPI()
 
 app.include_router(dataset_router)
 app.include_router(dataset_images_labels_router)
 app.include_router(plan_and_preprocess_router)
+app.include_router(predictions_router)
 
 @app.get("/ping")
 async def ping():
