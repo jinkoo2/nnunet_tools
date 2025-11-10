@@ -60,7 +60,7 @@ async def get_predictions_list(dataset_id: str, request: Request):
         logger.warning(f"Predictions folder for dataset '{dataset_id}' not found at: {dataset_path}")
         return results
 
-    # file_ending
+    # file_ending (.mha)
     file_ending = await get_file_ending(dataset_id)
     
     for entry in sorted(os.listdir(dataset_path)):
@@ -98,8 +98,8 @@ async def get_predictions_list(dataset_id: str, request: Request):
         outputs_dir = os.path.join(req_dir, "outputs")
         output_labels = []
         for expected_output_label in expected_output_label_images:
-            output_image_path = os.path.join(outputs_dir, expected_output_label)
-            if not os.path.exists(output_image_path):
+            output_label_path = os.path.join(outputs_dir, expected_output_label)
+            if not os.path.exists(output_label_path):
                 completed = False
                 break
             else:
@@ -111,6 +111,60 @@ async def get_predictions_list(dataset_id: str, request: Request):
         results.append(item)
 
     return results
+
+@router.get("/prediction")
+async def get_prediction(dataset_id: str = Query(...), req_id: str = Query(...), request: Request = None):
+    log_request(request)
+    logger.info(f"GET /prediction called with dataset_id={dataset_id}, req_id={req_id}")
+
+    dataset_path = os.path.join(nnunet_predictions_dir, dataset_id)
+    req_dir = os.path.join(dataset_path, req_id)
+
+    if not os.path.isdir(req_dir):
+        raise HTTPException(status_code=404, detail=f"Request directory not found: {req_dir}")
+
+    item = {"req_id": req_id}
+
+    # Load req.json
+    req_json_path = os.path.join(req_dir, "req.json")
+    if os.path.exists(req_json_path):
+        try:
+            with open(req_json_path, "r") as f:
+                item["req_info"] = json.load(f)
+        except (JSONDecodeError, OSError) as e:
+            log_exception(e)
+            item["req_info"] = {}
+    else:
+        logger.warning(f"Missing req.json in {req_dir}")
+        item["req_info"] = {}
+
+    # file_ending (.mha)
+    file_ending = await get_file_ending(dataset_id)
+
+    # List input images
+    item["input_images"] = sorted([
+        fname for fname in os.listdir(req_dir)
+        if fname.startswith("image_") and fname.endswith(file_ending)
+    ])
+
+    # Check outputs
+    expected_output_label_images = [f'image_{fname.split("_")[1]}{file_ending}' for fname in item["input_images"]]
+    outputs_dir = os.path.join(req_dir, "outputs")
+    output_labels = []
+    completed = True
+    for expected_output_label in expected_output_label_images:
+        output_label_path = os.path.join(outputs_dir, expected_output_label)
+        if not os.path.exists(output_label_path):
+            completed = False
+            break
+        output_labels.append(expected_output_label)
+
+    item["completed"] = completed
+    item["output_labels"] = sorted(output_labels)
+
+    logger.info(f"Returning item={item}")
+
+    return item
 
 @router.post("/predictions")
 async def post_prediction_request(
@@ -266,7 +320,6 @@ async def delete_prediction_request(dataset_id: str, req_id: str, request: Reque
         raise HTTPException(status_code=500, detail=f"Failed to delete request '{req_id}': {str(e)}")
 
 
-
 @router.get("/predictions/image_and_label_metadata")
 async def get_image_label_metadata(
     dataset_id: str = Query(...),
@@ -288,8 +341,107 @@ async def get_image_label_metadata(
     except Exception as e:
         log_exception(e)
         raise HTTPException(status_code=500, detail=f"Failed to get metadata: {str(e)}")
+
+
+
+import json
+
+def load_from_json(filepath):
+    with open(filepath, 'r') as f:
+        return json.load(f)
     
 
+@router.get("/predictions/contour_points")
+async def get_contour_points(
+    dataset_id: str = Query(...),
+    req_id: str = Query(...),
+    image_number: int = Query(...),
+    contour_number: int = Query(...),
+    coordinate_systems: str = Query("woI")
+):
+    import dict_helper
+    import image_tools  # assumes extract_binary_label_image and binary_image_to_contour_list_json_files are defined here
+
+    try:
+        # Build paths
+        dataset_path = os.path.join(nnunet_predictions_dir, dataset_id)
+        if not os.path.exists(dataset_path):
+            raise HTTPException(status_code=404, detail=f"dataset_path not found: {dataset_path}")
+
+        req_path = os.path.join(dataset_path, req_id)
+        if not os.path.exists(req_path):
+            raise HTTPException(status_code=404, detail=f"req_path not found: {req_path}")
+
+        outputs_dir = os.path.join(req_path, "outputs")
+        if not os.path.exists(outputs_dir):
+            raise HTTPException(status_code=404, detail=f"outputs_dir not found: {outputs_dir}")
+
+        # Load dataset and label info
+        file_ending = await get_file_ending(dataset_id)
+        dataset_json_path = os.path.join(outputs_dir, "dataset.json")
+        dataset = dict_helper.load_from_json(dataset_json_path)
+
+        labels_map = dataset.get("labels")
+        if not labels_map or len(labels_map) < 2:
+            raise HTTPException(status_code=400, detail="Invalid 'labels' in dataset.json. Must contain at least 2 label entries.")
+
+        # ✅ Check if contour_number is in label_map values
+        if contour_number not in labels_map.values():
+            raise HTTPException(status_code=400, detail=f"Contour number {contour_number} is not in label map.")
+
+        # Validate coordinate_systems
+        valid_coords = {'w', 'o', 'I'}
+        invalid = set(coordinate_systems) - valid_coords
+        if invalid:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid coordinate system(s): {', '.join(invalid)}. Allowed values are: w, o, I"
+            )
+
+        # Label and binary image paths
+        label_image_path = os.path.join(outputs_dir, f"image_{image_number}.mha")
+        if not os.path.exists(label_image_path):
+            raise HTTPException(status_code=404, detail=f"Label image not found: {label_image_path}")
+
+        binary_image_fname = f"image_{image_number}{file_ending}.{contour_number}.mha"
+        binary_image_file = os.path.join(outputs_dir, binary_image_fname)
+
+        # Generate binary label image if missing
+        if not os.path.exists(binary_image_file):
+            image_tools.extract_binary_label_image(label_image_path, contour_number, binary_image_file)
+
+        # Coordinate-to-file mapping
+        coord_map = {
+            'w': 'points_w',
+            'o': 'points_o',
+            'I': 'points_I',
+        }
+        selected_coords = {k: v for k, v in coord_map.items() if k in coordinate_systems}
+        print(f'selected_coords={selected_coords}')
+        contour_paths = {
+            key: os.path.join(outputs_dir, f"{binary_image_fname}.{key}.json")
+            for key in selected_coords.values()
+        }
+        print(f'contour_paths={contour_paths}')
+
+
+        # Generate contour .json files if any are missing
+        if any(not os.path.exists(p) for p in contour_paths.values()):
+            image_tools.binary_image_to_contour_list_json_files(binary_image_file)
+
+        # Load and return selected coordinate outputs
+        return {
+            key: load_from_json(path)
+            for key, path in contour_paths.items()
+        }
+
+    except Exception as e:
+        log_exception(e)
+        raise HTTPException(status_code=500, detail=f"Failed to get metadata: {str(e)}")
+
+
+
+        
 from fastapi.responses import FileResponse
 from fastapi import Query
 import tempfile

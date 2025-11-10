@@ -10,7 +10,7 @@ def zip_mha_files(source_dir, zip_path):
                 zipf.write(file_path, arcname=filename)  # arcname avoids storing full path
 
 def test_post_predictions_zip():
-    url = "http://127.0.0.1:8000/dataset/predictions_zip"
+    url = "http://127.0.0.1:8000/predictions_zip"
 
     dataset_id = "Dataset847_FourCirclesOnJawCalKv2"
     requester_id = "tester_001"
@@ -49,7 +49,7 @@ def test_post_predictions_zip():
         print(f"Error {response.status_code}: {response.text}")
 
 def test_post_predictions():
-    url = "http://127.0.0.1:8000/dataset/predictions"
+    url = "http://127.0.0.1:8000/predictions"
 
     dataset_id = "Dataset847_FourCirclesOnJawCalKv2"
     requester_id = "tester_001"
@@ -84,6 +84,36 @@ def test_post_predictions():
     else:
         print(f"Error {response.status_code}: {response.text}")
 
+def test_get_contour_points():
+    base_url = "http://127.0.0.1:8000"
+    endpoint = "/predictions/contour_points"
+
+    # Example parameters (modify to match your test case)
+    dataset_id = "Dataset015_CBCTBladderRectumBowel2"
+    req_id = "req_034"
+    image_number = 0
+    contour_number = 1
+    coordinate_systems = "woI"  # or "wI", "o", etc.
+
+    params = {
+        "dataset_id": dataset_id,
+        "req_id": req_id,
+        "image_number": image_number,
+        "contour_number": contour_number,
+        "coordinate_systems": coordinate_systems
+    }
+
+    response = requests.get(base_url + endpoint, params=params)
+
+    if response.status_code == 200:
+        print("Request succeeded.")
+        result = response.json()
+        for k, v in result.items():
+            print(f"{k}: {len(v)} point(s)")
+    else:
+        print(f"Error {response.status_code}: {response.text}")
+
 if __name__ == "__main__":
     #test_post_predictions_zip()
-    test_post_predictions()
+    #test_post_predictions()
+    test_get_contour_points()

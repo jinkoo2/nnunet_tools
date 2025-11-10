@@ -1,0 +1,243 @@
+Fingerprint extraction...
+Dataset847_FourCirclesOnJawCalKv2
+===determine_reader_writer_from_dataset_json()===
+===determine_reader_writer_from_file_ending() ===
+Function: <module>, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv/bin/nnUNetv2_plan_and_preprocess, Line: 8
+Function: plan_and_preprocess_entry, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_entrypoints.py, Line: 180
+Function: extract_fingerprints, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 47
+Function: extract_fingerprint_dataset, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 30
+Function: verify_dataset_integrity, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/verify_dataset_integrity.py, Line: 205
+Function: determine_reader_writer_from_dataset_json, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 39
+Function: determine_reader_writer_from_file_ending, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 47
+Using <class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'> as reader/writer
+reader_writer_class=<class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'>
+num_processes=8
+==================
+p=<multiprocessing.pool.Pool state=RUN pool_size=8>
+==================
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_0.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_1.mha)
+====verify_labels()====
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_10.mha)
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_11.mha)
+====verify_labels()====
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_12.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_13.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_14.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_15.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_16.mha)
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_17.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_18.mha)
+====verify_labels()====
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_19.mha)
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_2.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_3.mha)
+====verify_labels()====
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_4.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_5.mha)
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_6.mha)
+====verify_labels()====
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_7.mha)
+====verify_labels()====
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_8.mha)
+done - read_seg(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_9.mha)
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_0.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_1.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_10.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_11.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_12.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_13.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_14.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_15.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_16.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_17.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_18.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_19.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_2.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_3.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_4.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_5.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_6.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_7.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_8.mha)===
+==check_cases(/gpfs/projects/KimGroup/data/mic-mkfz/raw/Dataset847_FourCirclesOnJawCalKv2/labelsTr/image_9.mha)===
+
+####################
+verify_dataset_integrity Done. 
+If you didn't see any error messages then your dataset is most likely OK!
+####################
+
+===determine_reader_writer_from_dataset_json()===
+===determine_reader_writer_from_file_ending() ===
+Function: <module>, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv/bin/nnUNetv2_plan_and_preprocess, Line: 8
+Function: plan_and_preprocess_entry, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_entrypoints.py, Line: 180
+Function: extract_fingerprints, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 47
+Function: extract_fingerprint_dataset, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 33
+Function: run, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/dataset_fingerprint/fingerprint_extractor.py, Line: 122
+Function: determine_reader_writer_from_dataset_json, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 39
+Function: determine_reader_writer_from_file_ending, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 47
+Using <class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'> as reader/writer
+Experiment planning...
+
+############################
+INFO: You are using the old nnU-Net default planner. We have updated our recommendations. Please consider using those instead! Read more here: https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/resenc_presets.md
+############################
+
+2D U-Net configuration:
+{'data_identifier': 'nnUNetPlans_2d', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 2, 'patch_size': (768, 1024), 'median_image_size_in_voxels': array([ 768., 1024.]), 'spacing': array([0.25866506, 0.25866506]), 'normalization_schemes': ['ZScoreNormalization'], 'use_mask_for_norm': [False], 'resampling_fn_data': 'resample_data_or_seg_to_shape', 'resampling_fn_seg': 'resample_data_or_seg_to_shape', 'resampling_fn_data_kwargs': {'is_seg': False, 'order': 3, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_seg_kwargs': {'is_seg': True, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_probabilities': 'resample_data_or_seg_to_shape', 'resampling_fn_probabilities_kwargs': {'is_seg': False, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'architecture': {'network_class_name': 'dynamic_network_architectures.architectures.unet.PlainConvUNet', 'arch_kwargs': {'n_stages': 8, 'features_per_stage': (32, 64, 128, 256, 512, 512, 512, 512), 'conv_op': 'torch.nn.modules.conv.Conv2d', 'kernel_sizes': ((3, 3), (3, 3), (3, 3), (3, 3), (3, 3), (3, 3), (3, 3), (3, 3)), 'strides': ((1, 1), (2, 2), (2, 2), (2, 2), (2, 2), (2, 2), (2, 2), (2, 2)), 'n_conv_per_stage': (2, 2, 2, 2, 2, 2, 2, 2), 'n_conv_per_stage_decoder': (2, 2, 2, 2, 2, 2, 2), 'conv_bias': True, 'norm_op': 'torch.nn.modules.instancenorm.InstanceNorm2d', 'norm_op_kwargs': {'eps': 1e-05, 'affine': True}, 'dropout_op': None, 'dropout_op_kwargs': None, 'nonlin': 'torch.nn.LeakyReLU', 'nonlin_kwargs': {'inplace': True}}, '_kw_requires_import': ('conv_op', 'norm_op', 'dropout_op', 'nonlin')}, 'batch_dice': True}
+
+===determine_reader_writer_from_dataset_json()===
+===determine_reader_writer_from_file_ending() ===
+Function: <module>, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv/bin/nnUNetv2_plan_and_preprocess, Line: 8
+Function: plan_and_preprocess_entry, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_entrypoints.py, Line: 184
+Function: plan_experiments, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 94
+Function: plan_experiment_dataset, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/plan_and_preprocess_api.py, Line: 72
+Function: plan_experiment, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/experiment_planners/default_experiment_planner.py, Line: 511
+Function: determine_reader_writer, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/experiment_planning/experiment_planners/default_experiment_planner.py, Line: 91
+Function: determine_reader_writer_from_dataset_json, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 39
+Function: determine_reader_writer_from_file_ending, File: /gpfs/projects/KimGroup/projects/nnUNet_milan/src/nnunetv2/imageio/reader_writer_registry.py, Line: 47
+Using <class 'nnunetv2.imageio.simpleitk_reader_writer.SimpleITKIO'> as reader/writer
+Plans were saved to /gpfs/projects/KimGroup/data/mic-mkfz/preprocessed/Dataset847_FourCirclesOnJawCalKv2/nnUNetPlans.json
+Preprocessing...
+Preprocessing dataset Dataset847_FourCirclesOnJawCalKv2
+Configuration: 2d...
+Preprocessing the following configuration: 2d
+{'data_identifier': 'nnUNetPlans_2d', 'preprocessor_name': 'DefaultPreprocessor', 'batch_size': 2, 'patch_size': [768, 1024], 'median_image_size_in_voxels': [768.0, 1024.0], 'spacing': [0.25866506021171387, 0.25866506021171387], 'normalization_schemes': ['ZScoreNormalization'], 'use_mask_for_norm': [False], 'resampling_fn_data': 'resample_data_or_seg_to_shape', 'resampling_fn_seg': 'resample_data_or_seg_to_shape', 'resampling_fn_data_kwargs': {'is_seg': False, 'order': 3, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_seg_kwargs': {'is_seg': True, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'resampling_fn_probabilities': 'resample_data_or_seg_to_shape', 'resampling_fn_probabilities_kwargs': {'is_seg': False, 'order': 1, 'order_z': 0, 'force_separate_z': None}, 'architecture': {'network_class_name': 'dynamic_network_architectures.architectures.unet.PlainConvUNet', 'arch_kwargs': {'n_stages': 8, 'features_per_stage': [32, 64, 128, 256, 512, 512, 512, 512], 'conv_op': 'torch.nn.modules.conv.Conv2d', 'kernel_sizes': [[3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3], [3, 3]], 'strides': [[1, 1], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2], [2, 2]], 'n_conv_per_stage': [2, 2, 2, 2, 2, 2, 2, 2], 'n_conv_per_stage_decoder': [2, 2, 2, 2, 2, 2, 2], 'conv_bias': True, 'norm_op': 'torch.nn.modules.instancenorm.InstanceNorm2d', 'norm_op_kwargs': {'eps': 1e-05, 'affine': True}, 'dropout_op': None, 'dropout_op_kwargs': None, 'nonlin': 'torch.nn.LeakyReLU', 'nonlin_kwargs': {'inplace': True}}, '_kw_requires_import': ['conv_op', 'norm_op', 'dropout_op', 'nonlin']}, 'batch_dice': True}
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40529585675415, 0.2586639598165707, 0.2586639598165707], new_spacing: [258.40529585675415, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4095849825324, 0.2586682532357682, 0.2586682532357682], new_spacing: [258.4095849825324, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+2 1257
+1 1257
+3 1257
+2 1257
+4 1257
+3 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+1 1257
+3 1257
+2 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+4 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2c4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+1 1257
+3 1257
+2 1257
+4 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+3 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+3 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+2 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+3 1257
+1 1257
+4 1257
+2 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+3 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.40859387634407, 0.25866726113748156, 0.25866726113748156], new_spacing: [258.40859387634407, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2c4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+2 1257
+1 1257
+3 1257
+2 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+3 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+4 1257
+1 1257
+2 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+1 1257
+2 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+3 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fbd30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+3 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+1 1257
+4 1257
+2 1257
+3 1257
+4 1257
+===recursive_find_reader_writer_by_name(SimpleITKIO)===
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2e4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+3 1257
+4 1257
+old shape: (1, 768, 1024), new_shape: [   1  768 1024], old_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], new_spacing: [258.4063951515022, 0.25866506021171387, 0.25866506021171387], fn_data: functools.partial(<function resample_data_or_seg_to_shape at 0x2aac2c4fad30>, is_seg=False, order=3, order_z=0, force_separate_z=None)
+1 1257
+2 1257
+3 1257
+4 1257
+Configuration: 3d_fullres...
+INFO: Configuration 3d_fullres not found in plans file nnUNetPlans.json of dataset Dataset847_FourCirclesOnJawCalKv2. Skipping.
+Configuration: 3d_lowres...
+INFO: Configuration 3d_lowres not found in plans file nnUNetPlans.json of dataset Dataset847_FourCirclesOnJawCalKv2. Skipping.

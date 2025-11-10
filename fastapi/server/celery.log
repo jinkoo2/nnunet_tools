@@ -1,0 +1,145 @@
+ 
+ -------------- celery@milan1 v5.4.0 (opalescent)
+--- ***** ----- 
+-- ******* ---- Linux-5.14.0-570.33.2.el9_6.x86_64-x86_64-with-glibc2.34 2025-10-08 11:31:17
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         tasks:0x7ffff6194e50
+- ** ---------- .> transport:   redis://localhost:6379/0
+- ** ---------- .> results:     redis://localhost:6379/0
+- *** --- * --- .> concurrency: 128 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> celery           exchange=celery(direct) key=celery
+                
+
+[tasks]
+  . celery_app.long_task
+  . celery_app.nnunet_plan_and_preprocess
+
+[2025-10-08 11:31:19,662: WARNING/MainProcess] /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-10-08 11:31:19,673: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2025-10-08 11:31:19,674: WARNING/MainProcess] /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-10-08 11:31:19,675: INFO/MainProcess] mingle: searching for neighbors
+[2025-10-08 11:31:20,680: INFO/MainProcess] mingle: all alone
+[2025-10-08 11:31:20,702: INFO/MainProcess] celery@milan1 ready.
+[2025-10-08 11:33:15,909: WARNING/MainProcess] consumer: Connection to broker lost. Trying to re-establish the connection...
+Traceback (most recent call last):
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/retry.py", line 74, in call_with_retry
+    return do()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 914, in <lambda>
+    lambda: command(*args, **kwargs),
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 935, in try_read
+    return conn.read_response(disconnect_on_error=False, push_request=True)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 644, in read_response
+    response = self._parser.read_response(disable_decoding=disable_decoding)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/_parsers/resp2.py", line 15, in read_response
+    result = self._read_response(disable_decoding=disable_decoding)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/_parsers/resp2.py", line 25, in _read_response
+    raw = self._buffer.readline()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/_parsers/socket.py", line 115, in readline
+    self._read_from_socket()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/_parsers/socket.py", line 68, in _read_from_socket
+    raise ConnectionError(SERVER_CLOSED_CONNECTION_ERROR)
+redis.exceptions.ConnectionError: Connection closed by server.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 385, in connect_check_health
+    sock = self.retry.call_with_retry(
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/retry.py", line 74, in call_with_retry
+    return do()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 386, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 797, in _connect
+    raise err
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 781, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py", line 746, in start
+    c.loop(*c.loop_args())
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/loops.py", line 97, in asynloop
+    next(loop)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/kombu/asynchronous/hub.py", line 373, in create_loop
+    cb(*cbargs)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/kombu/transport/redis.py", line 1352, in on_readable
+    self.cycle.on_readable(fileno)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/kombu/transport/redis.py", line 569, in on_readable
+    chan.handlers[type]()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/kombu/transport/redis.py", line 918, in _receive
+    ret.append(self._receive_one(c))
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/kombu/transport/redis.py", line 928, in _receive_one
+    response = c.parse_response()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 937, in parse_response
+    response = self._execute(conn, try_read)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 913, in _execute
+    return conn.retry.call_with_retry(
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/retry.py", line 77, in call_with_retry
+    fail(error)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 915, in <lambda>
+    lambda _: self._reconnect(conn),
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/client.py", line 903, in _reconnect
+    conn.connect()
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 379, in connect
+    self.connect_check_health(check_health=True)
+  File "/gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/redis/connection.py", line 391, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+[2025-10-08 11:33:16,008: WARNING/MainProcess] /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py:391: CPendingDeprecationWarning: 
+In Celery 5.1 we introduced an optional breaking change which
+on connection loss cancels all currently executed tasks with late acknowledgement enabled.
+These tasks cannot be acknowledged as the connection is gone, and the tasks are automatically redelivered
+back to the queue. You can enable this behavior using the worker_cancel_long_running_tasks_on_connection_loss
+setting. In Celery 5.1 it is set to False by default. The setting will be set to True by default in Celery 6.0.
+
+  warnings.warn(CANCEL_TASKS_BY_DEFAULT, CPendingDeprecationWarning)
+
+[2025-10-08 11:33:16,009: WARNING/MainProcess] /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-10-08 11:33:16,010: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/0: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2025-10-08 11:33:18,013: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/0: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2025-10-08 11:33:22,019: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/0: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2025-10-08 11:33:28,027: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/0: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2025-10-08 11:33:36,038: INFO/MainProcess] Connected to redis://localhost:6379/0
+[2025-10-08 11:33:36,038: WARNING/MainProcess] /gpfs/projects/KimGroup/projects/nnUNet_milan/_venv_cpu/lib/python3.9/site-packages/celery/worker/consumer/consumer.py:508: CPendingDeprecationWarning: The broker_connection_retry configuration setting will no longer determine
+whether broker connection retries are made during startup in Celery 6.0 and above.
+If you wish to retain the existing behavior for retrying connections on startup,
+you should set broker_connection_retry_on_startup to True.
+  warnings.warn(
+
+[2025-10-08 11:33:36,040: INFO/MainProcess] mingle: searching for neighbors
+[2025-10-08 11:33:37,043: INFO/MainProcess] mingle: all alone
+
+worker: Warm shutdown (MainProcess)

@@ -54,7 +54,7 @@ def schedule_train(dataset_num, configuration, fold, run, gen_predicted_probabil
     
     cmd = f'module load slurm && sbatch {slurm_file}'
     print(f'running "{cmd}"')
-    subprocess.run(cmd, shell=True)
+    #subprocess.run(cmd, shell=True)
 
 def schedule_validation(dataset_num, configuration, fold, gen_predicted_probabilities):
 
@@ -104,17 +104,19 @@ def schedule_validation(dataset_num, configuration, fold, gen_predicted_probabil
 #dataset_num = 102
 #dataset_num = 103
 #dataset_num = 104
-dataset_num = 105
+#dataset_num = 105
 
-gen_predicted_probabilities = True # add --npz
-#configuration='2d'
+dataset_num = 847
+
+gen_predicted_probabilities = False # add --npz
+configuration='2d'
 #configuration='3d_fullres'
 #configuration='3d_lowres'
 #configuration='3d_cascade_fullres'
 validation_only = False
 
 # basic unet - 4 runs were enough (for Dataset9_Spleen)
-num_runs = 5
+num_runs = 1
 
 import time
 
@@ -129,7 +131,7 @@ else:
     skip_runs = []
     
     #for configuration in ['2d', '3d_fullres', '3d_lowres']:
-    for configuration in ['3d_lowres']:
+    for configuration in ['2d']:
         for run in range(num_runs):
             if run in skip_runs:
                 continue
